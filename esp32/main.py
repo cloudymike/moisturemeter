@@ -22,6 +22,8 @@ VERSION=0.1
 # Keep a long timeout so you can reload software before timeout
 wdt = machine.WDT(timeout=300000)
 
+
+
 class mainloop:
     def __init__(self):
         self.rtc = machine.RTC()
@@ -33,6 +35,14 @@ class mainloop:
             ntptime.settime()
         except:
             pass
+
+        self.pot = machine.ADC(machine.Pin(34))
+        self.pot.atten(machine.ADC.ATTN_11DB)       #Full range: 3.3v
+
+        self.potup = machine.Pin(4, machine.Pin.OUT)
+        self.potup.value(0)
+        self.potval=0
+
 
         self.unit='F'
         self.temp=0.0
@@ -49,6 +59,13 @@ class mainloop:
     def get_temp(self):
         self.temp = self.tempDevice.get_temp()
         return(self.temp)
+
+    def get_pot(self):
+        self.potup.value(1)
+        time.sleep_ms(200)
+        self.potval = self.pot.read()
+        self.potup.value(0)
+        return(self.potval)
 
     def run_time(self):
         year,month,day,hour,minute,second,dummy1,dummy2 = time.localtime(time.time())
@@ -69,9 +86,11 @@ class mainloop:
                 wdt.feed()
 
                 self.get_temp()
+                self.get_pot()
 
                 publish_json = {}
                 publish_json["temperature"] = self.temp
+                publish_json["potentiometer"] = self.potval
                 print("Publishing: {}".format(publish_json))
                 self.m.publish(publish_json)
  

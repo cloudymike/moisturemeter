@@ -94,7 +94,7 @@
         "y": 0
       },
       "id": 2,
-      "interval": "5m",
+      "interval": "1m",
       "maxDataPoints": 100,
       "options": {
         "legend": {
@@ -234,7 +234,7 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "BPM",
+            "axisLabel": "12bit",
             "axisPlacement": "auto",
             "axisSoftMin": 0,
             "barAlignment": 0,
@@ -307,7 +307,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "bubble_count{device_name=\"$device\"}",
+          "expr": "potentiometer_value{device_name=\"$device\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -317,7 +317,7 @@
           "useBackend": false
         }
       ],
-      "title": "Bubble count for $device",
+      "title": "Potentiometer value for $device",
       "type": "timeseries"
     }
   ],
