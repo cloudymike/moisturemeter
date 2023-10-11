@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<form action="" method="post" novalidate >
+    {{ form.hidden_tag() }}
+    <p>
+<div class="l">
+{% for subfield in form.device %}
+        {{ subfield }}
+        {{ subfield.label }}<br>
+{% endfor %}
+</div>
+
+            {% for error in form.device.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}
