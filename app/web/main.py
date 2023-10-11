@@ -33,11 +33,13 @@ prometheus_client.REGISTRY.unregister(prometheus_client.PLATFORM_COLLECTOR)
 prometheus_client.REGISTRY.unregister(prometheus_client.PROCESS_COLLECTOR)
 
 actual_temperature=Gauge('actual_temperature','Actual Temperature',['device_name'])
+potentiometer_value=Gauge('potentiometer_value','ADC read of potentiometer',['device_name'])
 
 # Initialize labels
 # Use devices i config to avoid raceconditions
 for device_name in config.device_list:
     actual_temperature.labels(device_name=device_name)
+    potentiometer_value.labels(device_name=device_name)
 
 ################### Form classes ###################
 
@@ -109,6 +111,7 @@ def clientmetrics():
     deviceList = datastore.lrange('DeviceList',0,999)
     for device_name in deviceList:
         actual_temperature.labels(device_name=device_name).set( getStatusValue('TEMPERATURE',device_name))
+        potentiometer_value.labels(device_name=device_name).set( getStatusValue('POTENTIOMETER',device_name))
 
     return generate_latest()
 
