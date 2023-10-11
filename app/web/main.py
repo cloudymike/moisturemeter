@@ -79,8 +79,10 @@ def graph():
 def displayTemp():
     deviceName = datastore.get('CurrentDevice')
     TEMPERATURE = getStatusValue('TEMPERATURE',device_name)
+    POTENTIOMETER = getStatusValue('POTENTIOMETER',device_name)
     return render_template('displaytemp.html', title='Current',
         temperature=TEMPERATURE,
+        potentiometer=POTENTIOMETER,
         device_name=deviceName
         )
 

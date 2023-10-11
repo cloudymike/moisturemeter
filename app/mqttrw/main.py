@@ -26,6 +26,7 @@ for device_name in config.device_list:
 # Remove printstatement when finished. For now it is good debugging
 def on_message(client, userdata, message):
     TEMPERATURE='? '
+    POTENTIOMETER='? '
 
     topic = message.topic
     try:
@@ -44,7 +45,9 @@ def on_message(client, userdata, message):
 
     TEMPERATURE=str(data.get('temperature','?'))
     datastore.set('{}:TEMPERATURE'.format(deviceName), TEMPERATURE)
-    print("Temperature:{}".format(TEMPERATURE))
+    POTENTIOMETER=str(data.get('potentiometer','?'))
+    datastore.set('{}:POTENTIOMETER'.format(deviceName), POTENTIOMETER)
+    print("Temperature:{}  Potentiometer:{}".format(TEMPERATURE, POTENTIOMETER))
 
 
 # Main section. Should probably be broken out as main but wait until mqtt removed
